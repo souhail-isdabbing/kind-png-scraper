@@ -1,0 +1,51 @@
+import sys
+import os
+import shutil
+import requests
+from bs4 import BeautifulSoup
+from pprint import pprint
+import wget
+
+ 
+def pagenum(num):
+  num=int(num)
+  if num<=1:
+    return ''
+  else:
+    return num
+
+res=requests.get(f'https://www.kindpng.com/free/{sys.argv[1]}/{pagenum(sys.argv[2])}')
+
+
+soup=BeautifulSoup(res.text,'html.parser')
+images=soup.find_all('img',{'class':'lazy'})
+
+
+urls=[i['data-original'] for i in images]
+urls=[i.replace('https://p.kindpng.com/picc/s/','https://www.kindpng.com/picc/m/') for i in urls]
+
+directory=f'{sys.argv[1]}({pagenum(sys.argv[2])})'
+parent_dir='C:\\Users\\SOUHAIL\\Desktop\\pngscrape'
+
+path=os.path.join(parent_dir,directory)
+
+os.makedirs(path)
+
+def filing(link):
+	link=link[31:]
+	return link
+
+for url in urls:
+	r = requests.get(url, stream = True) #checks if the links are valid
+
+	if r.status_code == 200: 
+		r.raw.decode_content = True
+		wget.download(url)
+		source=f'C:\\Users\\SOUHAIL\\Desktop\\pngscrape\\{filing(url)}'
+		destination=path
+		shutil.move(source,destination)
+		print('image downloaded succesfully')
+	else:
+		pass
+
+print(res)
