@@ -1,3 +1,6 @@
+
+#how to use: python pngscraping contentname pagenumber 
+
 import sys
 import os
 import shutil
