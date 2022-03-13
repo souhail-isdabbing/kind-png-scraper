@@ -25,7 +25,7 @@ urls=[i['data-original'] for i in images]
 urls=[i.replace('https://p.kindpng.com/picc/s/','https://www.kindpng.com/picc/m/') for i in urls]
 
 directory=f'{sys.argv[1]}({pagenum(sys.argv[2])})'
-parent_dir='C:\\Users\\SOUHAIL\\Desktop\\pngscrape'
+parent_dir='C:\\Users\\SOUHAIL\\Desktop\\pngscrape' #must modify this
 
 path=os.path.join(parent_dir,directory)
 
@@ -41,7 +41,7 @@ for url in urls:
 	if r.status_code == 200: 
 		r.raw.decode_content = True
 		wget.download(url)
-		source=f'C:\\Users\\SOUHAIL\\Desktop\\pngscrape\\{filing(url)}'
+		source=f'C:\\Users\\SOUHAIL\\Desktop\\pngscrape\\{filing(url)}'#must modify this
 		destination=path
 		shutil.move(source,destination)
 		print('image downloaded succesfully')
